@@ -1,4 +1,4 @@
 [package]
-name = "higher-kinded-lifetimes"
+name = "rust-higher-kinded-types"
 version = "0.1.0"
 authors = ["Stu Black"]
