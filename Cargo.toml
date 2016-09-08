@@ -1,0 +1,4 @@
+[package]
+name = "higher-kinded-lifetimes"
+version = "0.1.0"
+authors = ["Stu Black"]

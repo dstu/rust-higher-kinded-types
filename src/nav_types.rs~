@@ -1,0 +1,52 @@
+pub trait NavTypes<'a>: GraphTypes {
+    type NavVertex: Vertex<'a, Types=Self>;
+    type NavEdge: Edge<'a, Types=Self>;
+    type NavInEdgeCollection: InEdgeCollection<'a, Types=Self>;
+    type NavOutEdgeCollection: OutEdgeCollection<'a, Types=Self>;
+}
+
+pub trait Vertex<'a> {
+    type Types: NavTypes<'a>;
+    
+    fn data(&self) -> &'a <<Self as Vertex<'a>>::Types as GraphTypes>::VertexData;
+
+    fn out_edges(&self) -> <<Self as Vertex<'a>>::Types as NavTypes<'a>>::NavEdgeCollection;
+
+    fn in_edges(&self) -> <<Self as Vertex<'a>>::Types as NavTypes<'a>>::NavEdgeCollection;
+}
+
+pub trait Edge<'a> {
+    type Types: NavTypes<'a>;
+
+    fn data(&self) -> &'a <<Self as IEdge<'a>>::Types as GraphTypes>::EdgeData;
+
+    fn source(&self) -> <<Self as IEdge<'a>>::Types as NavTypes<'a>>::NavVertex;
+
+    fn target(&self) -> <<Self as IEdge<'a>>::Types as NavTypes<'a>>::NavVertex;
+}
+
+pub trait InEdgeCollection<'a> {
+    type Types: NavTypes<'a>;
+    type Iter: BoundedIterator<'a, Item=<<Self as EdgeCollection<'a>>::Types as NavTypes<'a>>::NavEdge>;
+
+    fn len(&self) -> usize;
+
+    fn is_empty(&self) -> bool { self.len() == 0 }
+
+    fn target(&self) -> <<Self as InEdgeCollection<'a>>::Types as NavTypes<'a>>::NavVertex;
+
+    fn iter(&self) -> Self::Iter;
+}
+
+pub trait OutEdgeCollection<'a> {
+    type Types: NavTypes<'a>;
+    type Iter: BoundedIterator<'a, Item=<<Self as EdgeCollection<'a>>::Types as NavTypes<'a>>::NavEdge>;
+
+    fn len(&self) -> usize;
+
+    fn is_empty(&self) -> bool { self.len() == 0 }
+
+    fn source(&self) -> <<Self as InEdgeCollection<'a>>::Types as NavTypes<'a>>::NavVertex;
+
+    fn iter(&self) -> Self::Iter;
+}

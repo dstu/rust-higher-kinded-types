@@ -1,0 +1,4 @@
+pub trait GraphTypes: Sized {
+    type VertexData;
+    type EdgeData;
+}
