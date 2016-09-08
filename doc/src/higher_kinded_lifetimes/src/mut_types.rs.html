@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src/mut_types.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>mut_types.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+</pre><pre class='rust '>
+<span class='doccomment'>//! Types that can traverse the graph and may modify its structure. These types</span>
+<span class='doccomment'>//! are backed by a mutable borrow of graph data, so multiple active</span>
+<span class='doccomment'>//! (unborrowed) instances cannot exist.</span>
+
+<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>GraphTypes</span>, <span class='ident'>BoundedIterator</span>};
+<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>nav_types</span>::<span class='ident'>NavTypes</span>;
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>: <span class='ident'>NavTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>MutVertex</span>: <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Types</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>MutEdge</span>: <span class='ident'>Edge</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Types</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>MutInEdgeCollection</span>: <span class='ident'>InEdgeCollection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Types</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>MutOutEdgeCollection</span>: <span class='ident'>OutEdgeCollection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Types</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+}
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>: <span class='ident'>Sized</span> {
+    <span class='kw'>type</span> <span class='ident'>Types</span>: <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>MutVertex</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+
+    <span class='kw'>fn</span> <span class='ident'>data</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>GraphTypes</span><span class='op'>&gt;</span>::<span class='ident'>VertexData</span>;
+
+    <span class='doccomment'>/// Since we have mutable access to the underlying graph, we can get a</span>
+    <span class='doccomment'>/// mutable borrow of its actual contents.</span>
+    <span class='kw'>fn</span> <span class='ident'>data_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>GraphTypes</span><span class='op'>&gt;</span>::<span class='ident'>VertexData</span>;
+
+    <span class='doccomment'>/// Consumes `self` entirely and passes the underlying borrow to a list of</span>
+    <span class='doccomment'>/// outgoing edges.</span>
+    <span class='kw'>fn</span> <span class='ident'>to_out_edges</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>MutOutEdgeCollection</span>;
+
+    <span class='doccomment'>/// Consumes `self` entirely and passes the underlying borrow to a list of</span>
+    <span class='doccomment'>/// incomign edges.</span>
+    <span class='kw'>fn</span> <span class='ident'>to_in_edges</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>::<span class='ident'>MutInEdgeCollection</span>;
+
+    <span class='doccomment'>/// Vertex and its kindred in the mut_types module are backed by a mutable</span>
+    <span class='doccomment'>/// borrow of a graph structure. This means that it is not possible to have</span>
+    <span class='doccomment'>/// multiple live instances of impls of these traits (say, a `Vertex` and an</span>
+    <span class='doccomment'>/// `Edge`) that are backed by the same graph. For flexibility, it is</span>
+    <span class='doccomment'>/// desirable to be able to create a read-only borrow from a</span>
+    <span class='doccomment'>/// `mut_types::Vertex`, so that we can do something like:</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```rust,ignore</span>
+    <span class='doccomment'>/// let mut vertex = ...;  // Get a mut_types::Vertex&lt;&#39;a&gt; impl.</span>
+    <span class='doccomment'>/// add_children(&amp;mut vertex);  // Modify graph topology.</span>
+    <span class='doccomment'>/// {</span>
+    <span class='doccomment'>///   let mut all_children = Vec::new();</span>
+    <span class='doccomment'>///   // Read-only borrow of vertex. Value returned implements nav_types::OutEdgeCollection.</span>
+    <span class='doccomment'>///   let children_collection = vertex.out_edges();</span>
+    <span class='doccomment'>///   for edge in children_collection.iter() {</span>
+    <span class='doccomment'>///     all_children.push(edge);  // Each of these edges shares the borrow created by</span>
+    <span class='doccomment'>///                               // children_collection.</span>
+    <span class='doccomment'>///   }</span>
+    <span class='doccomment'>///   do_something(&amp;all_children);  // etc.</span>
+    <span class='doccomment'>/// }  // Borrow of vertex ends. Now we can modify graph topology through vertex again.</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// When we reborrow by calling `vertex.out_edges()` in the above snippet,</span>
+    <span class='doccomment'>/// we create an instance of a type that implements</span>
+    <span class='doccomment'>/// `nav_types::OutEdgeCollection&lt;&#39;s&gt;`, for the lifetime `&#39;s` that is</span>
+    <span class='doccomment'>/// created for the borrow of vertex when it is passed as the `&amp;self`</span>
+    <span class='doccomment'>/// parameter of out_edges. Unfortunately for us the return type of</span>
+    <span class='doccomment'>/// `out_edges()` needs to include this lifetime, and it is not known</span>
+    <span class='doccomment'>/// statically. A different lifetime must be created for each distinct</span>
+    <span class='doccomment'>/// borrow of a `mut_types::Vertex` impl. To be able to do this, we need to</span>
+    <span class='doccomment'>/// be able to apply the type `nav_types::OutEdgeCollection` to the lifetime</span>
+    <span class='doccomment'>/// `&#39;s`. This requires polymorphic types that are functions of lifetimes.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// For simple relationships between a lifetime that is already bound (like</span>
+    <span class='doccomment'>/// the `&#39;a` of `Vertex&lt;&#39;a&gt;`) and on that is created in a new scope (like</span>
+    <span class='doccomment'>/// the `&#39;s` of `fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self)`), we know that `&#39;a` outlives</span>
+    <span class='doccomment'>/// `&#39;s`, so it looks a lot like all the information needed to generate the</span>
+    <span class='doccomment'>/// appropriate type (like `Vertex&lt;&#39;s&gt;`) is available. Unfortunately, the</span>
+    <span class='doccomment'>/// compiler balks with the error:</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```txt</span>
+    <span class='doccomment'>/// error[E0308]: mismatched types</span>
+    <span class='doccomment'>/// fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as NavTypes&lt;&#39;s&gt;&gt;::NavOutEdgeCollection where &#39;a: &#39;s;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// lifetime mismatch</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// note: expected type `mut_types::MutTypes&lt;&#39;a&gt;`</span>
+    <span class='doccomment'>/// note:    found type `mut_types::MutTypes&lt;&#39;s&gt;`</span>
+    <span class='doccomment'>/// note: the lifetime &#39;s as defined on unknown free region bounded by scope CodeExtent(85/DestructionScope(309))...</span>
+    <span class='doccomment'>/// note: ...does not necessarily outlive the lifetime &#39;a as defined on unknown free region bounded by scope CodeExtent(85/DestructionScope(309))</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This is the case even when we state that &#39;a outlives &#39;s, as in:</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```rust,ignore</span>
+    <span class='doccomment'>/// fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as NavTypes&lt;&#39;s&gt;&gt;::NavOutEdgeCollection where &#39;a: &#39;s;</span>
+    <span class='doccomment'>/// fn in_edges&lt;&#39;s&gt;(&amp;&#39;s self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as NavTypes&lt;&#39;s&gt;&gt;::NavInEdgeCollection where &#39;a: &#39;s;</span>
+    <span class='doccomment'>/// fn out_edges_mut&lt;&#39;s&gt;(&amp;&#39;s mut self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as MutTypes&lt;&#39;s&gt;&gt;::MutOutEdgeCollection where &#39;a: &#39;s;</span>
+    <span class='doccomment'>/// fn in_edges_mut&lt;&#39;s&gt;(&amp;&#39;s mut self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as MutTypes&lt;&#39;s&gt;&gt;::MutInEdgeCollection where &#39;a: &#39;s;</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='kw'>fn</span> <span class='ident'>out_edges</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+}
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Edge</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>: <span class='ident'>Sized</span> {
+    <span class='kw'>type</span> <span class='ident'>Types</span>: <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>MutEdge</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+}
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>InEdgeCollection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>: <span class='ident'>Sized</span> {
+    <span class='kw'>type</span> <span class='ident'>Types</span>: <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>MutInEdgeCollection</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>Iter</span>: <span class='ident'>BoundedIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>;
+}
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>OutEdgeCollection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>: <span class='ident'>Sized</span> {
+    <span class='kw'>type</span> <span class='ident'>Types</span>: <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>MutOutEdgeCollection</span><span class='op'>=</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>Iter</span>: <span class='ident'>BoundedIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>;
+}
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "higher_kinded_lifetimes";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

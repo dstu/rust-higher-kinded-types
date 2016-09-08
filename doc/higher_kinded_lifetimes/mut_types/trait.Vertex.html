@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Vertex` trait in crate `higher_kinded_lifetimes`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Vertex">
+
+    <title>higher_kinded_lifetimes::mut_types::Vertex - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a></p><script>window.sidebarCurrent = {name: 'Vertex', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a>::<wbr><a class='trait' href=''>Vertex</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-64' class='srclink' href='../../src/higher_kinded_lifetimes/src/mut_types.rs.html#15-93' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Vertex&lt;'a&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;;
+    fn <a href='#tymethod.data' class='fnname'>data</a>(&amp;self) -&gt; &amp;Self::Types::VertexData;
+    fn <a href='#tymethod.data_mut' class='fnname'>data_mut</a>(&amp;mut self) -&gt; &amp;mut Self::Types::VertexData;
+    fn <a href='#tymethod.to_out_edges' class='fnname'>to_out_edges</a>(self) -&gt; Self::Types::MutOutEdgeCollection;
+    fn <a href='#tymethod.to_in_edges' class='fnname'>to_in_edges</a>(self) -&gt; Self::Types::MutInEdgeCollection;
+    fn <a href='#tymethod.out_edges' class='fnname'>out_edges</a>(&amp;self);
+}</pre>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Types' class='method stab '><span id='Types.t' class='invisible'><code>type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;</code></span></h3></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.data' class='method stab '><span id='data.v' class='invisible'><code>fn <a href='#tymethod.data' class='fnname'>data</a>(&amp;self) -&gt; &amp;Self::Types::VertexData</code></span></h3><h3 id='tymethod.data_mut' class='method stab '><span id='data_mut.v' class='invisible'><code>fn <a href='#tymethod.data_mut' class='fnname'>data_mut</a>(&amp;mut self) -&gt; &amp;mut Self::Types::VertexData</code></span></h3><div class='docblock'><p>Since we have mutable access to the underlying graph, we can get a
+mutable borrow of its actual contents.</p>
+</div><h3 id='tymethod.to_out_edges' class='method stab '><span id='to_out_edges.v' class='invisible'><code>fn <a href='#tymethod.to_out_edges' class='fnname'>to_out_edges</a>(self) -&gt; Self::Types::MutOutEdgeCollection</code></span></h3><div class='docblock'><p>Consumes <code>self</code> entirely and passes the underlying borrow to a list of
+outgoing edges.</p>
+</div><h3 id='tymethod.to_in_edges' class='method stab '><span id='to_in_edges.v' class='invisible'><code>fn <a href='#tymethod.to_in_edges' class='fnname'>to_in_edges</a>(self) -&gt; Self::Types::MutInEdgeCollection</code></span></h3><div class='docblock'><p>Consumes <code>self</code> entirely and passes the underlying borrow to a list of
+incomign edges.</p>
+</div><h3 id='tymethod.out_edges' class='method stab '><span id='out_edges.v' class='invisible'><code>fn <a href='#tymethod.out_edges' class='fnname'>out_edges</a>(&amp;self)</code></span></h3><div class='docblock'><p>Vertex and its kindred in the mut_types module are backed by a mutable
+borrow of a graph structure. This means that it is not possible to have
+multiple live instances of impls of these traits (say, a <code>Vertex</code> and an
+<code>Edge</code>) that are backed by the same graph. For flexibility, it is
+desirable to be able to create a read-only borrow from a
+<code>mut_types::Vertex</code>, so that we can do something like:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vertex</span> <span class='op'>=</span> ...;  <span class='comment'>// Get a mut_types::Vertex&lt;&#39;a&gt; impl.</span>
+<span class='ident'>add_children</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>vertex</span>);  <span class='comment'>// Modify graph topology.</span>
+{
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>all_children</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+  <span class='comment'>// Read-only borrow of vertex. Value returned implements nav_types::OutEdgeCollection.</span>
+  <span class='kw'>let</span> <span class='ident'>children_collection</span> <span class='op'>=</span> <span class='ident'>vertex</span>.<span class='ident'>out_edges</span>();
+  <span class='kw'>for</span> <span class='ident'>edge</span> <span class='kw'>in</span> <span class='ident'>children_collection</span>.<span class='ident'>iter</span>() {
+    <span class='ident'>all_children</span>.<span class='ident'>push</span>(<span class='ident'>edge</span>);  <span class='comment'>// Each of these edges shares the borrow created by</span>
+                              <span class='comment'>// children_collection.</span>
+  }
+  <span class='ident'>do_something</span>(<span class='kw-2'>&amp;</span><span class='ident'>all_children</span>);  <span class='comment'>// etc.</span>
+}  <span class='comment'>// Borrow of vertex ends. Now we can modify graph topology through vertex again.</span></pre>
+
+<p>When we reborrow by calling <code>vertex.out_edges()</code> in the above snippet,
+we create an instance of a type that implements
+<code>nav_types::OutEdgeCollection&lt;&#39;s&gt;</code>, for the lifetime <code>&#39;s</code> that is
+created for the borrow of vertex when it is passed as the <code>&amp;self</code>
+parameter of out_edges. Unfortunately for us the return type of
+<code>out_edges()</code> needs to include this lifetime, and it is not known
+statically. A different lifetime must be created for each distinct
+borrow of a <code>mut_types::Vertex</code> impl. To be able to do this, we need to
+be able to apply the type <code>nav_types::OutEdgeCollection</code> to the lifetime
+<code>&#39;s</code>. This requires polymorphic types that are functions of lifetimes.</p>
+
+<p>For simple relationships between a lifetime that is already bound (like
+the <code>&#39;a</code> of <code>Vertex&lt;&#39;a&gt;</code>) and on that is created in a new scope (like
+the <code>&#39;s</code> of <code>fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self)</code>), we know that <code>&#39;a</code> outlives
+<code>&#39;s</code>, so it looks a lot like all the information needed to generate the
+appropriate type (like <code>Vertex&lt;&#39;s&gt;</code>) is available. Unfortunately, the
+compiler balks with the error:</p>
+
+<pre><code class="language-txt">error[E0308]: mismatched types
+fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self) -&gt; &lt;&lt;Self as Vertex&lt;&#39;s&gt;&gt;::Types as NavTypes&lt;&#39;s&gt;&gt;::NavOutEdgeCollection where &#39;a: &#39;s;
+
+lifetime mismatch
+
+note: expected type `mut_types::MutTypes&lt;&#39;a&gt;`
+note:    found type `mut_types::MutTypes&lt;&#39;s&gt;`
+note: the lifetime &#39;s as defined on unknown free region bounded by scope CodeExtent(85/DestructionScope(309))...
+note: ...does not necessarily outlive the lifetime &#39;a as defined on unknown free region bounded by scope CodeExtent(85/DestructionScope(309))
+</code></pre>
+
+<p>This is the case even when we state that &#39;a outlives &#39;s, as in:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>fn</span> <span class='ident'>out_edges</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;s</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>NavTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>NavOutEdgeCollection</span> <span class='kw'>where</span> <span class='lifetime'>&#39;a</span>: <span class='lifetime'>&#39;s</span>;
+<span class='kw'>fn</span> <span class='ident'>in_edges</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;s</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>NavTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>NavInEdgeCollection</span> <span class='kw'>where</span> <span class='lifetime'>&#39;a</span>: <span class='lifetime'>&#39;s</span>;
+<span class='kw'>fn</span> <span class='ident'>out_edges_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;s</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>MutOutEdgeCollection</span> <span class='kw'>where</span> <span class='lifetime'>&#39;a</span>: <span class='lifetime'>&#39;s</span>;
+<span class='kw'>fn</span> <span class='ident'>in_edges_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;s</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Vertex</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Types</span> <span class='kw'>as</span> <span class='ident'>MutTypes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>::<span class='ident'>MutInEdgeCollection</span> <span class='kw'>where</span> <span class='lifetime'>&#39;a</span>: <span class='lifetime'>&#39;s</span>;</pre>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    </ul><script type="text/javascript" async
+                         src="../../implementors/higher_kinded_lifetimes/mut_types/trait.Vertex.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "higher_kinded_lifetimes";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

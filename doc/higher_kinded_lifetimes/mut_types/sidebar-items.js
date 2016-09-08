@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Edge",""],["InEdgeCollection",""],["MutTypes",""],["OutEdgeCollection",""],["Vertex",""]]});
