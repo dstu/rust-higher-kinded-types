@@ -63,7 +63,7 @@ pub trait Vertex<'a>: Sized {
     /// `'s`. This requires polymorphic types that are functions of lifetimes.
     ///
     /// For simple relationships between a lifetime that is already bound (like
-    /// the `'a` of `Vertex<'a>`) and on that is created in a new scope (like
+    /// the `'a` of `Vertex<'a>`) and one that is created in a new scope (like
     /// the `'s` of `fn out_edges<'s>(&'s self)`), we know that `'a` outlives
     /// `'s`, so it looks a lot like all the information needed to generate the
     /// appropriate type (like `Vertex<'s>`) is available. Unfortunately, the
