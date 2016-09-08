@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `higher_kinded_lifetimes` crate.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, higher_kinded_lifetimes">
+    <meta name="description" content="API documentation for the Rust `rust_higher_kinded_types` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, rust_higher_kinded_types">
 
-    <title>higher_kinded_lifetimes - Rust</title>
+    <title>rust_higher_kinded_types - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'higher_kinded_lifetimes', ty: 'mod', relpath: '../'};</script>
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'rust_higher_kinded_types', ty: 'mod', relpath: '../'};</script>
     </nav>
 
     <nav class="sub">
@@ -43,11 +43,11 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>higher_kinded_lifetimes</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>rust_higher_kinded_types</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/higher_kinded_lifetimes/src/lib.rs.html#1-38' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/rust_higher_kinded_types/src/lib.rs.html#1-38' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This is a simple library designed to showcase a prospective design for a
 family of zipper-like graph traversal traits. These traits may be
 implemented over varying graph implementations (adjacency list, adjacency
@@ -72,7 +72,7 @@ Rust&#39;s ability to track lifetimes means that that may be done safely.</p>
 <table>
                        <tr class=' module-item'>
                            <td><a class='mod' href='mut_types/index.html'
-                                  title='higher_kinded_lifetimes::mut_types'>mut_types</a></td>
+                                  title='rust_higher_kinded_types::mut_types'>mut_types</a></td>
                            <td class='docblock short'>
                                 <p>Types that can traverse the graph and may modify its structure. These types
 are backed by a mutable borrow of graph data, so multiple active
@@ -81,7 +81,7 @@ are backed by a mutable borrow of graph data, so multiple active
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='mod' href='nav_types/index.html'
-                                  title='higher_kinded_lifetimes::nav_types'>nav_types</a></td>
+                                  title='rust_higher_kinded_types::nav_types'>nav_types</a></td>
                            <td class='docblock short'>
                                 <p>Types that can traverse the graph and cannot modify its structure. These
 types are backed by a read-only borrow of graph data, so multiple instances
@@ -91,7 +91,7 @@ of them may coexist.</p>
 <table>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.BoundedIterator.html'
-                                  title='higher_kinded_lifetimes::BoundedIterator'>BoundedIterator</a></td>
+                                  title='rust_higher_kinded_types::BoundedIterator'>BoundedIterator</a></td>
                            <td class='docblock short'>
                                 <p>When iterating over components of a graph structure, we need to give a name
 to the borrow of the underlying graph. This trait does so.</p>
@@ -99,7 +99,7 @@ to the borrow of the underlying graph. This trait does so.</p>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.GraphTypes.html'
-                                  title='higher_kinded_lifetimes::GraphTypes'>GraphTypes</a></td>
+                                  title='rust_higher_kinded_types::GraphTypes'>GraphTypes</a></td>
                            <td class='docblock short'>
                                 <p>Base types that the graph defines a structure over.</p>
                            </td>
@@ -158,7 +158,7 @@ to the borrow of the underlying graph. This trait does so.</p>
 
     <script>
         window.rootPath = "../";
-        window.currentCrate = "higher_kinded_lifetimes";
+        window.currentCrate = "rust_higher_kinded_types";
         window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `BoundedIterator` trait in crate `higher_kinded_lifetimes`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, BoundedIterator">
+    <meta name="description" content="API documentation for the Rust `GraphTypes` trait in crate `rust_higher_kinded_types`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GraphTypes">
 
-    <title>higher_kinded_lifetimes::BoundedIterator - Rust</title>
+    <title>rust_higher_kinded_types::GraphTypes - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>higher_kinded_lifetimes</a></p><script>window.sidebarCurrent = {name: 'BoundedIterator', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>rust_higher_kinded_types</a></p><script>window.sidebarCurrent = {name: 'GraphTypes', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,18 +43,25 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>higher_kinded_lifetimes</a>::<wbr><a class='trait' href=''>BoundedIterator</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>rust_higher_kinded_types</a>::<wbr><a class='trait' href=''>GraphTypes</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-91' class='srclink' href='../src/higher_kinded_lifetimes/src/lib.rs.html#38' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait BoundedIterator&lt;'a&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a> { }</pre><div class='docblock'><p>When iterating over components of a graph structure, we need to give a name
-to the borrow of the underlying graph. This trait does so.</p>
+               </span><a id='src-88' class='srclink' href='../src/rust_higher_kinded_types/src/lib.rs.html#29-34' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait GraphTypes: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type <a href='#associatedtype.VertexData' class='type'>VertexData</a>;
+    type <a href='#associatedtype.EdgeData' class='type'>EdgeData</a>;
+}</pre><div class='docblock'><p>Base types that the graph defines a structure over.</p>
 </div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.VertexData' class='method stab '><span id='VertexData.t' class='invisible'><code>type <a href='#associatedtype.VertexData' class='type'>VertexData</a></code></span></h3><div class='docblock'><p>The type of data at vertices.</p>
+</div><h3 id='associatedtype.EdgeData' class='method stab '><span id='EdgeData.t' class='invisible'><code>type <a href='#associatedtype.EdgeData' class='type'>EdgeData</a></code></span></h3><div class='docblock'><p>The type of data at edges.</p>
+</div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     </ul><script type="text/javascript" async
-                         src="../implementors/higher_kinded_lifetimes/trait.BoundedIterator.js">
+                         src="../implementors/rust_higher_kinded_types/trait.GraphTypes.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -110,7 +117,7 @@ to the borrow of the underlying graph. This trait does so.</p>
 
     <script>
         window.rootPath = "../";
-        window.currentCrate = "higher_kinded_lifetimes";
+        window.currentCrate = "rust_higher_kinded_types";
         window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>

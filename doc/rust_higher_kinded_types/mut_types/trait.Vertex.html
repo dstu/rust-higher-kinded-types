@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Vertex` trait in crate `higher_kinded_lifetimes`.">
+    <meta name="description" content="API documentation for the Rust `Vertex` trait in crate `rust_higher_kinded_types`.">
     <meta name="keywords" content="rust, rustlang, rust-lang, Vertex">
 
-    <title>higher_kinded_lifetimes::mut_types::Vertex - Rust</title>
+    <title>rust_higher_kinded_types::mut_types::Vertex - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a></p><script>window.sidebarCurrent = {name: 'Vertex', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rust_higher_kinded_types</a>::<wbr><a href='index.html'>mut_types</a></p><script>window.sidebarCurrent = {name: 'Vertex', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,13 +43,13 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a>::<wbr><a class='trait' href=''>Vertex</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rust_higher_kinded_types</a>::<wbr><a href='index.html'>mut_types</a>::<wbr><a class='trait' href=''>Vertex</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-64' class='srclink' href='../../src/higher_kinded_lifetimes/src/mut_types.rs.html#15-93' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-64' class='srclink' href='../../src/rust_higher_kinded_types/src/mut_types.rs.html#15-93' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Vertex&lt;'a&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;;
+    type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../rust_higher_kinded_types/mut_types/trait.MutTypes.html' title='rust_higher_kinded_types::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;;
     fn <a href='#tymethod.data' class='fnname'>data</a>(&amp;self) -&gt; &amp;Self::Types::VertexData;
     fn <a href='#tymethod.data_mut' class='fnname'>data_mut</a>(&amp;mut self) -&gt; &amp;mut Self::Types::VertexData;
     fn <a href='#tymethod.to_out_edges' class='fnname'>to_out_edges</a>(self) -&gt; Self::Types::MutOutEdgeCollection;
@@ -58,7 +58,7 @@
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Types' class='method stab '><span id='Types.t' class='invisible'><code>type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;</code></span></h3></div>
+        <h3 id='associatedtype.Types' class='method stab '><span id='Types.t' class='invisible'><code>type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../rust_higher_kinded_types/mut_types/trait.MutTypes.html' title='rust_higher_kinded_types::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutVertex=Self&gt;</code></span></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
         <h3 id='tymethod.data' class='method stab '><span id='data.v' class='invisible'><code>fn <a href='#tymethod.data' class='fnname'>data</a>(&amp;self) -&gt; &amp;Self::Types::VertexData</code></span></h3><h3 id='tymethod.data_mut' class='method stab '><span id='data_mut.v' class='invisible'><code>fn <a href='#tymethod.data_mut' class='fnname'>data_mut</a>(&amp;mut self) -&gt; &amp;mut Self::Types::VertexData</code></span></h3><div class='docblock'><p>Since we have mutable access to the underlying graph, we can get a
@@ -128,7 +128,7 @@ note: ...does not necessarily outlive the lifetime &#39;a as defined on unknown 
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     </ul><script type="text/javascript" async
-                         src="../../implementors/higher_kinded_lifetimes/mut_types/trait.Vertex.js">
+                         src="../../implementors/rust_higher_kinded_types/mut_types/trait.Vertex.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -184,7 +184,7 @@ note: ...does not necessarily outlive the lifetime &#39;a as defined on unknown 
 
     <script>
         window.rootPath = "../../";
-        window.currentCrate = "higher_kinded_lifetimes";
+        window.currentCrate = "rust_higher_kinded_types";
         window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `InEdgeCollection` trait in crate `higher_kinded_lifetimes`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, InEdgeCollection">
+    <meta name="description" content="API documentation for the Rust `OutEdgeCollection` trait in crate `rust_higher_kinded_types`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, OutEdgeCollection">
 
-    <title>higher_kinded_lifetimes::mut_types::InEdgeCollection - Rust</title>
+    <title>rust_higher_kinded_types::mut_types::OutEdgeCollection - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a></p><script>window.sidebarCurrent = {name: 'InEdgeCollection', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rust_higher_kinded_types</a>::<wbr><a href='index.html'>mut_types</a></p><script>window.sidebarCurrent = {name: 'OutEdgeCollection', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,22 +43,22 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>higher_kinded_lifetimes</a>::<wbr><a href='index.html'>mut_types</a>::<wbr><a class='trait' href=''>InEdgeCollection</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rust_higher_kinded_types</a>::<wbr><a href='index.html'>mut_types</a>::<wbr><a class='trait' href=''>OutEdgeCollection</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-80' class='srclink' href='../../src/higher_kinded_lifetimes/src/mut_types.rs.html#99-102' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait InEdgeCollection&lt;'a&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutInEdgeCollection=Self&gt;;
-    type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='../../higher_kinded_lifetimes/trait.BoundedIterator.html' title='higher_kinded_lifetimes::BoundedIterator'>BoundedIterator</a>&lt;'a&gt;;
+               </span><a id='src-84' class='srclink' href='../../src/rust_higher_kinded_types/src/mut_types.rs.html#104-107' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait OutEdgeCollection&lt;'a&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../rust_higher_kinded_types/mut_types/trait.MutTypes.html' title='rust_higher_kinded_types::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutOutEdgeCollection=Self&gt;;
+    type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='../../rust_higher_kinded_types/trait.BoundedIterator.html' title='rust_higher_kinded_types::BoundedIterator'>BoundedIterator</a>&lt;'a&gt;;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Types' class='method stab '><span id='Types.t' class='invisible'><code>type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../higher_kinded_lifetimes/mut_types/trait.MutTypes.html' title='higher_kinded_lifetimes::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutInEdgeCollection=Self&gt;</code></span></h3><h3 id='associatedtype.Iter' class='method stab '><span id='Iter.t' class='invisible'><code>type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='../../higher_kinded_lifetimes/trait.BoundedIterator.html' title='higher_kinded_lifetimes::BoundedIterator'>BoundedIterator</a>&lt;'a&gt;</code></span></h3></div>
+        <h3 id='associatedtype.Types' class='method stab '><span id='Types.t' class='invisible'><code>type <a href='#associatedtype.Types' class='type'>Types</a>: <a class='trait' href='../../rust_higher_kinded_types/mut_types/trait.MutTypes.html' title='rust_higher_kinded_types::mut_types::MutTypes'>MutTypes</a>&lt;'a,&nbsp;MutOutEdgeCollection=Self&gt;</code></span></h3><h3 id='associatedtype.Iter' class='method stab '><span id='Iter.t' class='invisible'><code>type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='../../rust_higher_kinded_types/trait.BoundedIterator.html' title='rust_higher_kinded_types::BoundedIterator'>BoundedIterator</a>&lt;'a&gt;</code></span></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     </ul><script type="text/javascript" async
-                         src="../../implementors/higher_kinded_lifetimes/mut_types/trait.InEdgeCollection.js">
+                         src="../../implementors/rust_higher_kinded_types/mut_types/trait.OutEdgeCollection.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -114,7 +114,7 @@
 
     <script>
         window.rootPath = "../../";
-        window.currentCrate = "higher_kinded_lifetimes";
+        window.currentCrate = "rust_higher_kinded_types";
         window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
