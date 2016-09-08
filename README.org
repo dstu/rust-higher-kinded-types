@@ -1,0 +1,7 @@
+# A motivating example for higher-kinded types in Rust
+
+This crate defines an incomplete set of traits that could be used to define a
+zipper-like abstraction for arbitrary graphical structures in Rust. The rustdocs
+explain how the lack of a particular form of higher-kinded types makes this
+difficult. They may be browsed at 
+https://dstu.github.io/rust-higher-kinded-types/doc/rust_higher_kinded_types/index.html.
