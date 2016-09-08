@@ -100,7 +100,7 @@ be able to apply the type <code>nav_types::OutEdgeCollection</code> to the lifet
 <code>&#39;s</code>. This requires polymorphic types that are functions of lifetimes.</p>
 
 <p>For simple relationships between a lifetime that is already bound (like
-the <code>&#39;a</code> of <code>Vertex&lt;&#39;a&gt;</code>) and on that is created in a new scope (like
+the <code>&#39;a</code> of <code>Vertex&lt;&#39;a&gt;</code>) and one that is created in a new scope (like
 the <code>&#39;s</code> of <code>fn out_edges&lt;&#39;s&gt;(&amp;&#39;s self)</code>), we know that <code>&#39;a</code> outlives
 <code>&#39;s</code>, so it looks a lot like all the information needed to generate the
 appropriate type (like <code>Vertex&lt;&#39;s&gt;</code>) is available. Unfortunately, the
