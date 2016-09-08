@@ -5,3 +5,6 @@ zipper-like abstraction for arbitrary graphical structures in Rust. The rustdocs
 explain how the lack of a particular form of higher-kinded types makes this
 difficult. They may be browsed at 
 https://dstu.github.io/rust-higher-kinded-types/doc/rust_higher_kinded_types/index.html.
+
+For a complete breakdown of where higher kinded types seem necessary, see
+https://dstu.github.io/rust-higher-kinded-types/doc/rust_higher_kinded_types/mut_types/trait.Vertex.html.
